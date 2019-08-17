@@ -6,11 +6,7 @@ var keys = require("./keys.js");
 var axios = require("axios");
 
 var DigitalAssistant = function () {
-    // this.hungry = false;
-    // this.sleepy = false;
-    // this.bored = true;
-    // this.age = 0;
-
+   
     this.movie = function () {
         // We then run the request with axios module on a URL with a JSON
         axios.get("http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=trilogy").then(
@@ -27,6 +23,14 @@ var DigitalAssistant = function () {
             }
         );
 
+    };
+
+    this.concert = function() {
+        console.log("Time to pick a concert");
+    };
+
+    this.spotify = function() {
+        console.log("How about we add some Spotify too!");
     };
 }
 
