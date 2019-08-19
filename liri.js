@@ -8,42 +8,56 @@ var moment = require("moment");
 var Spotify = require('node-spotify-api');
 
 // Store all of the arguments in an array
-var nodeArgs = process.argv[4];
+var nodeArgs = process.argv;
 
 // Create an empty variable for holding the movie name
-var movieName = process.argv[4];
-var bandName = process.argv[4];
-var songName = process.argv[4];
+var movieName = "";
+var bandName = "";
+var songName = "";
 
 // Loop through all the words in the node argument
 // And do a little for-loop magic to handle the inclusion of "+"s
-for (var i = 0; i < nodeArgs.length; i++) {
+// MOVIE LOOP
+for (var i = 4; i < nodeArgs.length; i++) {
 
-    if (i > 0 < nodeArgs.length) {
-      movieName == movieName + "+" + nodeArgs[i];
+    if (i > 4 && i < nodeArgs.length) {
+      movieName = movieName + "+" + nodeArgs[i];
     } else {
       movieName += nodeArgs[i];
   
     }
   }
 
+// CONCERT LOOP
+for (var i = 4; i < nodeArgs.length; i++) {
 
-for (var i = 0; i < nodeArgs.length; i++) {
-
-    if (i > 0 < nodeArgs.length) {
-      bandName == bandName + "+" + nodeArgs[i];
+    if (i > 4 && i < nodeArgs.length) {
+      bandName = bandName + "+" + nodeArgs[i];
     } else {
       bandName += nodeArgs[i];
   
     }
   }
 
+// SPOTIFY LOOP 
+for (var i = 4; i < nodeArgs.length; i++) {
+
+    if (i > 4 && i < nodeArgs.length) {
+      songName = songName + "+" + nodeArgs[i];
+    } else {
+      songName += nodeArgs[i];
+  
+    }
+  }
+
 // Then run a request with axios to the OMDB API with the movie specified
 var omdbUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-var bandsUrl = "https://rest.bandsintown.com/artists/" + bandName +"/events?app_id=codingbootcamp";
+// console.log(omdbUrl);
+var bandsUrl = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
+// console.log(bandsUrl);
 var songUrl = { type: 'track', query: songName };
+console.log(songUrl);
 
-// console.log(queryUrl);
 
 var DigitalAssistant = function () {
 
