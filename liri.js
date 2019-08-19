@@ -7,11 +7,49 @@ var axios = require("axios");
 var moment = require("moment");
 var Spotify = require('node-spotify-api');
 
+// Store all of the arguments in an array
+var nodeArgs = process.argv[4];
+
+// Create an empty variable for holding the movie name
+var movieName = process.argv[4];
+var bandName = process.argv[4];
+var songName = process.argv[4];
+
+// Loop through all the words in the node argument
+// And do a little for-loop magic to handle the inclusion of "+"s
+for (var i = 0; i < nodeArgs.length; i++) {
+
+    if (i > 0 < nodeArgs.length) {
+      movieName == movieName + "+" + nodeArgs[i];
+    } else {
+      movieName += nodeArgs[i];
+  
+    }
+  }
+
+
+for (var i = 0; i < nodeArgs.length; i++) {
+
+    if (i > 0 < nodeArgs.length) {
+      bandName == bandName + "+" + nodeArgs[i];
+    } else {
+      bandName += nodeArgs[i];
+  
+    }
+  }
+
+// Then run a request with axios to the OMDB API with the movie specified
+var omdbUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+var bandsUrl = "https://rest.bandsintown.com/artists/" + bandName +"/events?app_id=codingbootcamp";
+var songUrl = { type: 'track', query: songName };
+
+// console.log(queryUrl);
+
 var DigitalAssistant = function () {
 
-    this.movie = function () {
+    this.findMovie = function () {
         // We then run the request with axios module on a URL with a JSON
-        axios.get("http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=trilogy").then(
+        axios.get(omdbUrl).then(
             function (response) {
                 // Then we print out the movie info
                 console.log("============================================================================");
@@ -35,8 +73,8 @@ var DigitalAssistant = function () {
 
     };
 
-    this.concert = function () {
-        axios.get("https://rest.bandsintown.com/artists/tyler+the+creator/events?app_id=codingbootcamp").then(
+    this.findConcert = function () {
+        axios.get(bandsUrl).then(
             function (response) {
                 // handle success
                 console.log("============================================================================");
@@ -64,7 +102,7 @@ var DigitalAssistant = function () {
         });
 
         spotify
-            .search({ type: 'track', query: 'Billie Jean' })
+            .search(songUrl)
             .then(function (response) {
                 console.log("============================================================================");
                 console.log("Artist: " + response.tracks.items[0].artists[0].name);
