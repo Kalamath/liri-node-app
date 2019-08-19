@@ -14,6 +14,7 @@ var DigitalAssistant = function () {
         axios.get("http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=trilogy").then(
             function (response) {
                 // Then we print out the movie info
+                console.log("============================================================================");
                 console.log("Title: " + response.data.Title);
                 console.log("Release Year: " + response.data.Year);
                 console.log("IMDB Rating: " + response.data.imdbRating);
@@ -22,6 +23,7 @@ var DigitalAssistant = function () {
                 console.log("Language: " + response.data.Language);
                 console.log("Plot: " + response.data.Plot);
                 console.log("Cast: " + response.data.Actors);
+                console.log("============================================================================");
             })
             .catch(function (error) {
                 // handle error
@@ -37,13 +39,13 @@ var DigitalAssistant = function () {
         axios.get("https://rest.bandsintown.com/artists/tyler+the+creator/events?app_id=codingbootcamp").then(
             function (response) {
                 // handle success
-                console.log("==============================================================");
+                console.log("============================================================================");
                 console.log("Venue: " + response.data[0].venue.name);
                 console.log("Location: " + response.data[0].venue.city + ", " + response.data[0].venue.region);
                 console.log("Date: " + JSON.stringify({
                     datetime: moment().format("L")
                 }));
-                console.log("==============================================================");
+                console.log("============================================================================");
             })
             .catch(function (error) {
                 // handle error
@@ -55,7 +57,6 @@ var DigitalAssistant = function () {
     };
 
     this.spotify = function () {
-        console.log("How about we add some Spotify too!");
         // Variable for Spotify id & secret
         var spotify = new Spotify({
             id: "632c7bb33dfd44c0bd974aad84faec95",
@@ -63,12 +64,14 @@ var DigitalAssistant = function () {
         });
 
         spotify
-            .search({ type: 'track', query: 'pyramids' })
+            .search({ type: 'track', query: 'Billie Jean' })
             .then(function (response) {
+                console.log("============================================================================");
                 console.log("Artist: " + response.tracks.items[0].artists[0].name);
                 console.log("Track: " + response.tracks.items[0].name);
                 console.log("Album: " + response.tracks.items[0].album.name);
                 console.log("Preview Link: " + response.tracks.items[0].external_urls.spotify);
+                console.log("============================================================================");
             })
             .catch(function (err) {
                 console.log(err);
