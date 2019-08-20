@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+var fs = require("fs");
 var keys = require("./keys.js");
 // Basic Node application for requesting data from the OMDB website via axios
 // Here we incorporate the "axios" npm package
@@ -21,34 +22,34 @@ var songName = "";
 for (var i = 4; i < nodeArgs.length; i++) {
 
     if (i > 4 && i < nodeArgs.length) {
-      movieName = movieName + "+" + nodeArgs[i];
+        movieName = movieName + "+" + nodeArgs[i];
     } else {
-      movieName += nodeArgs[i];
-  
+        movieName += nodeArgs[i];
+
     }
-  }
+}
 
 // CONCERT LOOP
 for (var i = 4; i < nodeArgs.length; i++) {
 
     if (i > 4 && i < nodeArgs.length) {
-      bandName = bandName + "+" + nodeArgs[i];
+        bandName = bandName + "+" + nodeArgs[i];
     } else {
-      bandName += nodeArgs[i];
-  
+        bandName += nodeArgs[i];
+
     }
-  }
+}
 
 // SPOTIFY LOOP 
 for (var i = 4; i < nodeArgs.length; i++) {
 
     if (i > 4 && i < nodeArgs.length) {
-      songName = songName + "+" + nodeArgs[i];
+        songName = songName + "+" + nodeArgs[i];
     } else {
-      songName += nodeArgs[i];
-  
+        songName += nodeArgs[i];
+
     }
-  }
+}
 
 // Then run a request with axios to the OMDB API with the movie specified
 var omdbUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
@@ -61,6 +62,7 @@ console.log(songUrl);
 
 var DigitalAssistant = function () {
 
+    // MOVIE FUNCTION
     this.findMovie = function () {
         // We then run the request with axios module on a URL with a JSON
         axios.get(omdbUrl).then(
@@ -79,7 +81,19 @@ var DigitalAssistant = function () {
             })
             .catch(function (error) {
                 // handle error
-                console.log(error);
+                axios.get("http://www.omdbapi.com/?t=mr+nobody&y=&plot=short&apikey=trilogy").then(function (response) {
+                    console.log("============================================================================");
+                    console.log("Title: " + response.data.Title);
+                    console.log("Release Year: " + response.data.Year);
+                    console.log("IMDB Rating: " + response.data.imdbRating);
+                    console.log("Rotten Tomatoes Score: " + response.data.Ratings[1].Value);
+                    console.log("Country: " + response.data.Country);
+                    console.log("Language: " + response.data.Language);
+                    console.log("Plot: " + response.data.Plot);
+                    console.log("Cast: " + response.data.Actors);
+                    console.log("============================================================================");
+                })
+                // console.log(error);
             })
             .finally(function () {
                 // always executed
@@ -87,6 +101,7 @@ var DigitalAssistant = function () {
 
     };
 
+    // CONCERT FUNCTION
     this.findConcert = function () {
         axios.get(bandsUrl).then(
             function (response) {
@@ -108,6 +123,7 @@ var DigitalAssistant = function () {
             })
     };
 
+    // SPOTIFY FUNCTION
     this.spotify = function () {
         // Variable for Spotify id & secret
         var spotify = new Spotify({
@@ -129,6 +145,49 @@ var DigitalAssistant = function () {
                 console.log(err);
             });
     };
+
+    // RANDOM.TXT FUNCTION
+    this.doWhatItSays = function () {
+        // Running the readFile module that's inside of fs.
+        // Stores the read information into the variable "data"
+        fs.readFile("random.txt", "utf8", function (err, data) {
+            if (err) {
+                return console.log(err);
+            }
+
+            // Break the string down by comma separation and store the contents into the output array.
+            var output = data.split(",");
+
+            // Loop Through the newly created output array
+            for (var i = 0; i < output.length; i++) {
+
+                // Print each element (item) of the array/
+                console.log(output[i]);
+            }
+        });
+
+    }
+
+    this.log = function () {
+        // Running the readFile module that's inside of fs.
+        // Stores the read information into the variable "data"
+        fs.appendFile("random.txt", "utf8", function (err, data) {
+            if (err) {
+                return console.log(err);
+            }
+
+            // Break the string down by comma separation and store the contents into the output array.
+            var output = data.split(",");
+
+            // Loop Through the newly created output array
+            for (var i = 0; i < output.length; i++) {
+
+                // Print each element (item) of the array/
+                console.log(output[i]);
+            }
+        });
+
+    }
 }
 
 var bots = {};
@@ -141,3 +200,21 @@ var bot = process.argv[2];
 var method = process.argv[3];
 
 bots[bot][method]();
+
+// switch (method) {
+//     case "total":
+//       total();
+//       break;
+    
+//     case "deposit":
+//       deposit();
+//       break;
+    
+//     case "withdraw":
+//       withdraw();
+//       break;
+    
+//     case "lotto":
+//       lotto();
+//       break;
+//     }
