@@ -57,7 +57,7 @@ var omdbUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=
 var bandsUrl = "https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=codingbootcamp";
 // console.log(bandsUrl);
 var songUrl = { type: 'track', query: songName };
-console.log(songUrl);
+// console.log(songUrl);
 
 
 var DigitalAssistant = function () {
@@ -68,6 +68,7 @@ var DigitalAssistant = function () {
         axios.get(omdbUrl).then(
             function (response) {
                 // Then we print out the movie info
+                console.log(omdbUrl);
                 console.log("============================================================================");
                 console.log("Title: " + response.data.Title);
                 console.log("Release Year: " + response.data.Year);
@@ -106,6 +107,7 @@ var DigitalAssistant = function () {
         axios.get(bandsUrl).then(
             function (response) {
                 // handle success
+                console.log(bandsUrl);
                 console.log("============================================================================");
                 console.log("Venue: " + response.data[0].venue.name);
                 console.log("Location: " + response.data[0].venue.city + ", " + response.data[0].venue.region);
@@ -134,6 +136,7 @@ var DigitalAssistant = function () {
         spotify
             .search(songUrl)
             .then(function (response) {
+                console.log(songUrl);
                 console.log("============================================================================");
                 console.log("Artist: " + response.tracks.items[0].artists[0].name);
                 console.log("Track: " + response.tracks.items[0].name);
@@ -171,7 +174,7 @@ var DigitalAssistant = function () {
     this.log = function () {
         // Running the readFile module that's inside of fs.
         // Stores the read information into the variable "data"
-        fs.appendFile("random.txt", "utf8", function (err, data) {
+        fs.appendFile("random.txt", "utf8", DigitalAssistant, function (err, data) {
             if (err) {
                 return console.log(err);
             }
